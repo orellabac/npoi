@@ -333,7 +333,7 @@ namespace NPOI.HPSF
 
                         int codepage = this.Codepage;
                         if (codepage < 0)
-                            codepage = (int)Constants.CP_UNICODE;
+                            codepage = NPOI.Util.CodePageUtil.CP_UNICODE;
                         byte[] a= Encoding.GetEncoding(codepage).GetBytes(key);
                         byte[] b = Encoding.UTF8.GetBytes(name);
                         if (NPOI.Util.Arrays.Equals(a, b))

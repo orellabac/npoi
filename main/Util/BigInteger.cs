@@ -31,7 +31,7 @@ namespace NPOI.Util
         // These "redundant fields" are initialized with recognizable nonsense
         // values, and cached the first time they are needed (or never, if they
         // aren't needed).
-
+/** Commenting out unreachable code and will remove on newer releases
         /**
         * One plus the bitCount of this BigInteger. Zeros means unitialized.
         *
@@ -39,12 +39,12 @@ namespace NPOI.Util
         * @see #bitCount
         * @deprecated Deprecated since logical value is offset from stored
         * value and correction factor is applied in accessor method.
-        */
+
 #if !HIDE_UNREACHABLE_CODE
         [Obsolete]
 #endif
         private int bitCount;
-
+*/
         /**
          * One plus the bitLength of this BigInteger. Zeros means unitialized.
          * (either value is acceptable).
@@ -506,37 +506,7 @@ namespace NPOI.Util
             }
             return n;
         }
-        /**
-         * Returns the number of bits in the two's complement representation
-         * of this BigInteger that differ from its sign bit.  This method is
-         * useful when implementing bit-vector style sets atop BigIntegers.
-         *
-         * @return number of bits in the two's complement representation
-         *         of this BigInteger that differ from its sign bit.
-         */
-        public int BitCount()
-        {
-            //@SuppressWarnings("deprecation") 
-            int bc = bitCount - 1;
-            if (bc == -1)
-            {  // bitCount not initialized yet
-                bc = 0;      // offset by one to initialize
-                // Count the bits in the magnitude
-                for (int i = 0; i < mag.Length; i++)
-                    bc += BitCountForInt(mag[i]);
-                if (_signum < 0)
-                {
-                    // Count the trailing zeros in the magnitude
-                    int magTrailingZeroCount = 0, j;
-                    for (j = mag.Length - 1; mag[j] == 0; j--)
-                        magTrailingZeroCount += 32;
-                    magTrailingZeroCount += NumberOfTrailingZeros(mag[j]);
-                    bc += magTrailingZeroCount - 1;
-                }
-                bitCount = bc + 1;
-            }
-            return bc;
-        }
+
 
         /**
          * Returns a BigInteger whose value is the absolute value of this
@@ -762,51 +732,7 @@ namespace NPOI.Util
             }
             return 1;
         }
-        /**
-         * Returns the signum function of this BigInteger.
-         *
-         * @return -1, 0 or 1 as the value of this BigInteger is negative, zero or
-         *         positive.
-         */
-        public int Signum()
-        {
-            return this._signum;
-        }
-        /**
-         * Returns a byte array containing the two's-complement
-         * representation of this BigInteger.  The byte array will be in
-         * <i>big-endian</i> byte-order: the most significant byte is in
-         * the zeroth element.  The array will contain the minimum number
-         * of bytes required to represent this BigInteger, including at
-         * least one sign bit, which is {@code (ceil((this.bitLength() +
-         * 1)/8))}.  (This representation is compatible with the
-         * {@link #BigInteger(byte[]) (byte[])} constructor.)
-         *
-         * @return a byte array containing the two's-complement representation of
-         *         this BigInteger.
-         * @see    #BigInteger(byte[])
-         */
-        public byte[] ToByteArray()
-        {
-            int byteLen = (BitLength() / 8 + 1);
-            byte[] byteArray = new byte[byteLen];
 
-            for (int i = byteLen - 1, bytesCopied = 4, nextInt = 0, intIndex = 0; i >= 0; i--)
-            {
-                if (bytesCopied == 4)
-                {
-                    nextInt = GetInt(intIndex++);
-                    bytesCopied = 1;
-                }
-                else
-                {
-                    nextInt = Operator.UnsignedRightShift(nextInt, 8);
-                    bytesCopied++;
-                }
-                byteArray[i] = (byte)nextInt;
-            }
-            return byteArray;
-        }
         /**
          * Returns the length of the two's complement representation in ints,
          * including space for at least one sign bit.
@@ -816,11 +742,7 @@ namespace NPOI.Util
             return Operator.UnsignedRightShift(BitLength(), 5) + 1;
         }
 
-        /* Returns sign bit */
-        private int signBit()
-        {
-            return _signum < 0 ? 1 : 0;
-        }
+
 
         /* Returns an int of sign bits */
         private int signInt()
@@ -1191,29 +1113,9 @@ namespace NPOI.Util
 
             return true;
         }
-        /**
-         * Returns the minimum of this BigInteger and {@code val}.
-         *
-         * @param  val value with which the minimum is to be computed.
-         * @return the BigInteger whose value is the lesser of this BigInteger and
-         *         {@code val}.  If they are equal, either may be returned.
-         */
-        public BigInteger Min(BigInteger val)
-        {
-            return (CompareTo(val) < 0 ? this : val);
-        }
 
-        /**
-         * Returns the maximum of this BigInteger and {@code val}.
-         *
-         * @param  val value with which the maximum is to be computed.
-         * @return the BigInteger whose value is the greater of this and
-         *         {@code val}.  If they are equal, either may be returned.
-         */
-        public BigInteger Max(BigInteger val)
-        {
-            return (CompareTo(val) > 0 ? this : val);
-        }
+
+
 
 
         // Hash Function

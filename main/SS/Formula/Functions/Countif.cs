@@ -324,6 +324,12 @@ namespace NPOI.SS.Formula.Functions
                 int testValue;
                 if (x is StringEval)
                 {
+                    return false;
+/*
+ * 
+ * I am commenting out his code because it is unreachable
+ * and it will be removed on newer releases
+ * 
 #if !HIDE_UNREACHABLE_CODE
                     if (true)
                     { // change to false to observe more intuitive behaviour
@@ -342,6 +348,7 @@ namespace NPOI.SS.Formula.Functions
 #else
                     return false;
 #endif
+*/
                 }
                 else if ((x is BoolEval))
                 {

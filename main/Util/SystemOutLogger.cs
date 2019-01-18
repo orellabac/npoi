@@ -57,14 +57,30 @@ namespace NPOI.Util
         /// <param name="obj1">The object to log.  This is Converted to a string.</param>
         /// <param name="exception">An exception to be logged</param>
         public override void Log(int level, Object obj1,
-                        Exception exception) {
-        if (Check(level)) {
-            Console.WriteLine("["+_cat+"] "+obj1);
-            if(exception != null) {
-                System.Console.Write(exception.StackTrace);
+                        Exception exception)
+        {
+            if (Check(level))
+            {
+                Console.WriteLine("[" + _cat + "] " + obj1);
+                if (exception != null)
+                {
+                    System.Console.Write(exception.StackTrace);
+                }
             }
         }
-    }
+
+        static string LogLevelFromConfiguration
+        {
+            get
+            {
+#if NETSTANDARD2_0
+                throw new System.NotImplementedException();
+#else
+            return ConfigurationManager.AppSettings["poi.log.level"];
+
+#endif
+            }
+        }
 
 
         /// <summary>
@@ -77,7 +93,7 @@ namespace NPOI.Util
             int currentLevel;
             try
             {
-                string temp = ConfigurationManager.AppSettings["poi.log.level"];
+            string temp = LogLevelFromConfiguration;
                 if (string.IsNullOrEmpty(temp))
                     temp = WARN.ToString(CultureInfo.InvariantCulture);
                 currentLevel = int.Parse(temp, CultureInfo.InvariantCulture);

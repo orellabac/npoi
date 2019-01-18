@@ -250,6 +250,8 @@ namespace NPOI.SS.UserModel
         {
             return GetJavaCalendar(date, use1904windowing, false);
         }
+/** These methods have no references and causes a warning
+ * will be removed later
         /**
          *  Given an Excel date with either 1900 or 1904 date windowing,
          *  converts it to a java.util.Date.
@@ -264,12 +266,12 @@ namespace NPOI.SS.UserModel
          *  @param use1904windowing  true if date uses 1904 windowing,
          *   or false if using 1900 date windowing.
          *  @return Java representation of the date, or null if date is not a valid Excel date
-         */
+         *
         public static DateTime getJavaDate(double date, bool use1904windowing, TimeZone tz)
         {
             return GetJavaCalendar(date, use1904windowing, false);
         }
-        /**
+
          *  Given an Excel date with either 1900 or 1904 date windowing,
          *  converts it to a java.util.Date.
          *  
@@ -284,12 +286,12 @@ namespace NPOI.SS.UserModel
          *   or false if using 1900 date windowing.
          *  @param roundSeconds round to closest second
          *  @return Java representation of the date, or null if date is not a valid Excel date
-         */
+         
         public static DateTime GetJavaDate(double date, bool use1904windowing, TimeZone tz, bool roundSeconds)
         {
             return GetJavaCalendar(date, use1904windowing, roundSeconds);
         }
-
+*/
         public static void SetCalendar(ref DateTime calendar, int wholeDays,
             int millisecondsInDay, bool use1904windowing, bool roundSeconds)
         {

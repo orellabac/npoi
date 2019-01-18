@@ -142,12 +142,13 @@ namespace NPOI.POIFS.Crypt
         {
             try
             {
-                string name = null;
                 string chain = null;
-                if (algorithm == EncryptionHeader.ALGORITHM_AES_128 ||
+                /* 
+                 * All this block has no real effect, because name variable is not used.
+                 * if (algorithm == EncryptionHeader.ALGORITHM_AES_128 ||
                     algorithm == EncryptionHeader.ALGORITHM_AES_192 ||
                     algorithm == EncryptionHeader.ALGORITHM_AES_256)
-                    name = "AES";
+                    name = "AES";*/
 
                 if (mode == EncryptionHeader.MODE_CBC)
                     chain = "CBC";

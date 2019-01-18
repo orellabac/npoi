@@ -42,6 +42,19 @@ namespace NPOI.HSSF.UserModel
         /** Our cache of font details we've alReady looked up */
         private static Hashtable fontDetailsMap = new Hashtable();
 
+
+
+        static string FontMetricsConfigurationFilename
+        {
+            get {
+#if NETSTANDARD2_0
+                throw new NotImplementedException();
+#else
+            return ConfigurationManager.AppSettings["font.metrics.filename"];
+#endif
+            }
+        }
+
         /**
          * Retrieves the fake font details for a given font.
          * @param font  the font to lookup.
@@ -63,7 +76,7 @@ namespace NPOI.HSSF.UserModel
                     String propFileName = null;
                     try
                     {
-                        propFileName = ConfigurationManager.AppSettings["font.metrics.filename"];
+                        propFileName = FontMetricsConfigurationFilename;
                     }
                     catch(Exception) { }
 

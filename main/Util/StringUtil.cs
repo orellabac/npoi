@@ -512,7 +512,7 @@ namespace NPOI.Util
                 
                 int msCodepoint = char.ConvertToUtf32(string1, offset);//codePointAt(stringChars, offset, string1.Length);
                 int uniCodepoint = msCodepointToUnicode[(msCodepoint)];
-                sb.Append(Char.ConvertFromUtf32(uniCodepoint == null ? msCodepoint : uniCodepoint));
+                sb.Append(Char.ConvertFromUtf32(uniCodepoint));
                 offset += CharCount(msCodepoint);
             }
 

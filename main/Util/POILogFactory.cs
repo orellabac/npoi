@@ -67,6 +67,18 @@ namespace NPOI.Util
         {
             return GetLogger(type.Name);
         }
+
+
+        static string LoggerClassFromConfiguration {
+            get
+            {
+#if NETSTANDARD2_0
+                throw new System.NotImplementedException();
+#else
+                return ConfigurationManager.AppSettings["loggername"];  
+#endif
+            }     
+        }
         
         /// <summary>
         /// Get a logger, based on a String
@@ -84,7 +96,7 @@ namespace NPOI.Util
             //  between class loading and first use
             if(_loggerClassName == null) {
         	    try {
-        		    _loggerClassName = ConfigurationManager.AppSettings["loggername"];
+                    _loggerClassName = LoggerClassFromConfiguration;
         	    } catch(Exception) {}
             	
         	    // Use the default logger if none specified,

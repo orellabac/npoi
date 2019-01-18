@@ -22,7 +22,9 @@ namespace NPOI.SS.Format
     using NPOI.SS.UserModel;
     using System.Text.RegularExpressions;
     using System.Collections.Generic;
+#if USES_WINDOWS_FORMS
     using System.Windows.Forms;
+#endif
     using System.Drawing;
 
     /**
@@ -216,7 +218,7 @@ namespace NPOI.SS.Format
             //if (value is Number) {
             if (NPOI.Util.Number.IsNumber(value))
             {
-                double val ;
+                double val;
                 double.TryParse(value.ToString(), out val);
                 if (val < 0 &&
                     ((formatPartCount == 2
@@ -306,6 +308,7 @@ namespace NPOI.SS.Format
             }
         }
 
+#if USES_WINDOWS_FORMS
         /**
          * Uses the result of Applying this format to the value, Setting the text
          * and color of a label before returning the result.
@@ -324,7 +327,7 @@ namespace NPOI.SS.Format
                 label.ForeColor = (/*setter*/result.TextColor);
             }
             return result;
-        }
+        
         /**
      * Uses the result of applying this format to the given date, setting the text
      * and color of a label before returning the result.
@@ -335,6 +338,7 @@ namespace NPOI.SS.Format
      *
      * @return The result, in a {@link CellFormatResult}.
      */
+
         private CellFormatResult Apply(Label label, DateTime date, double numericValue)
         {
             CellFormatResult result = Apply(date, numericValue);
@@ -385,6 +389,7 @@ namespace NPOI.SS.Format
                     return Apply(label, "?");
             }
         }
+#endif
         /**
          * Returns the {@link CellFormatPart} that applies to the value.  Result
          * depends on how many parts the cell format has, the cell value and any

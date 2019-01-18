@@ -1,0 +1,17 @@
+
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2017
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NPOI.Core", "NPOI.Core.csproj", "{A6712E62-D961-4013-AD92-25897269B2AD}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A6712E62-D961-4013-AD92-25897269B2AD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A6712E62-D961-4013-AD92-25897269B2AD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A6712E62-D961-4013-AD92-25897269B2AD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A6712E62-D961-4013-AD92-25897269B2AD}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

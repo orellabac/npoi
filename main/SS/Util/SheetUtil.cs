@@ -21,7 +21,9 @@ namespace NPOI.SS.Util
 
     using NPOI.SS.UserModel;
     using System.Drawing;
+#if USES_WINDOWS_FORMS
     using System.Windows.Forms;
+#endif
     using System.Collections.Generic;
 
     /**
@@ -170,7 +172,7 @@ namespace NPOI.SS.Util
                     targetSheet.AddMergedRegion(newCellRangeAddress);
                 }
             }
-            return newRow;           
+            return newRow;
         }
         public static IRow CopyRow(ISheet sheet, int sourceRowIndex, int targetRowIndex)
         {
@@ -312,7 +314,7 @@ namespace NPOI.SS.Util
             //TextLayout layout;
 
             double width = -1;
-            using (Bitmap bmp = new Bitmap(1,1))
+            using (Bitmap bmp = new Bitmap(1, 1))
             using (Graphics g = Graphics.FromImage(bmp))
             {
                 if (cellType == CellType.String)
@@ -429,10 +431,23 @@ namespace NPOI.SS.Util
         }
 
 
-        // /**
-        // * Drawing context to measure text
-        // */
-        //private static FontRenderContext fontRenderContext = new FontRenderContext(null, true, true);
+
+
+        private static int GetDefaultCharWidth(Font font) 
+        {
+            var str = "" + new String(defaultChar, 1);
+#if NETSTANDARD2_0
+//System.Drawing.Common depends on libgdiplus make sure it is installed on mac or Unix
+
+            var bitmapForGraphics = new Bitmap(600, 200);
+            var graphics = Graphics.FromImage(bitmapForGraphics);
+            return (int)graphics.MeasureString(str, font).Width;
+
+#else
+           return TextRenderer.MeasureText(str, font).Width;
+#endif
+
+        }
 
         /**
          * Compute width of a column and return the result
@@ -450,15 +465,15 @@ namespace NPOI.SS.Util
 
             IWorkbook wb = sheet.Workbook;
             DataFormatter formatter = new DataFormatter();
-            IFont defaultFont = wb.GetFontAt((short) 0);
+            IFont defaultFont = wb.GetFontAt((short)0);
 
             //str = new AttributedString((defaultChar));
             //copyAttributes(defaultFont, str, 0, 1);
             //layout = new TextLayout(str.Iterator, fontRenderContext);
             //int defaultCharWidth = (int)layout.Advance;
             Font font = IFont2Font(defaultFont);
-            int defaultCharWidth = TextRenderer.MeasureText("" + new String(defaultChar, 1), font).Width;
-            //DummyEvaluator dummyEvaluator = new DummyEvaluator();
+            int defaultCharWidth = 0;
+            defaultCharWidth = GetDefaultCharWidth(font);
 
             double width = -1;
             foreach (IRow row in sheet)
@@ -499,8 +514,8 @@ namespace NPOI.SS.Util
             //layout = new TextLayout(str.Iterator, fontRenderContext);
             //int defaultCharWidth = (int)layout.Advance;
             Font font = IFont2Font(defaultFont);
-            int defaultCharWidth = TextRenderer.MeasureText("" + new String(defaultChar, 1), font).Width;
-
+            int defaultCharWidth = GetDefaultCharWidth(font);
+      
             double width = -1;
             for (int rowIdx = firstRow; rowIdx <= lastRow; ++rowIdx)
             {
